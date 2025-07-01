@@ -3,6 +3,7 @@
 /manifest/
 /transcriptions.jsonl
 /lightning_logs/
+/experiments/
 
 
 

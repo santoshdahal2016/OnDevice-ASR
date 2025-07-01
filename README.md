@@ -8,3 +8,9 @@ CER: 0.0041
 LibriSpeech Test Clean :  
 WER: 0.0182
 CER: 0.0052
+
+
+# Commands 
+
+python train.py --config-path=./  --config-name=fast-conformer_transducer_bpe.yaml
+

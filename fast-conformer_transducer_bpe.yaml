@@ -48,6 +48,13 @@ model:
   rnnt_reduction: 'mean_volume'
   skip_nan_grad: false
 
+
+  enable_kd: true
+  teacher_model_path: /diyoData/experiments/knowledgedistill/teacher/teacher_model.nemo
+  kd_temperature: 1.0
+  kd_alpha: 0.5
+
+
   model_defaults:
     enc_hidden: ${model.encoder.d_model}
     pred_hidden: 640
@@ -235,14 +242,14 @@ model:
     weight_decay: 1e-4
     sched:
       name: CosineAnnealing
-      warmup_steps: 5000
+      warmup_steps: 2500
       warmup_ratio: null
       min_lr: 1e-5
 
 trainer:
   devices: -1 # number of GPUs, -1 would use all available GPUs
   num_nodes: 1
-  max_epochs: 500
+  max_epochs: 15
   max_steps: -1 # computed at runtime if not set
   val_check_interval: 1.0 # Set to 0.25 to check 4 times per epoch, or an int for number of iterations
   accelerator: auto
@@ -263,9 +270,9 @@ trainer:
 
 
 exp_manager:
-  exp_dir: null
-  name: ${name}
-  create_tensorboard_logger: true
+  exp_dir: experiments
+  name: without_teacher
+  create_tensorboard_logger: False
   create_checkpoint_callback: true
   checkpoint_callback_params:
     # in case of multiple validation sets, first one is used
@@ -277,7 +284,7 @@ exp_manager:
   resume_if_exists: false
   resume_ignore_no_checkpoint: false
 
-  create_wandb_logger: false
+  create_wandb_logger: True
   wandb_logger_kwargs:
-    name: null
-    project: null
+    name: asr_distill
+    project: student_without_teacher
