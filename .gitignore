@@ -5,5 +5,5 @@
 /lightning_logs/
 /experiments/
 
-
-
+rnnt_joint_dump.pt
+/onnx_export
