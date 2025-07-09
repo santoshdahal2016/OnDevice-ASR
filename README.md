@@ -16,6 +16,10 @@ LibriSpeech Test Clean :
 WER: 0.1123
 CER: 0.0508
 
+# With Teacher 
+WER: 0.0914
+CER: 0.0389
+
 
 ## KD Loss  nan problem 
 

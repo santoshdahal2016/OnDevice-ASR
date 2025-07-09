@@ -2,7 +2,7 @@ import nemo.collections.asr as nemo_asr
 import json
 import os
 
-MODEL_PATH = "/diyoData/experiments/knowledgedistill/experiments/without_teacher/2025-07-02_07-35-55/checkpoints/without_teacher.nemo"
+MODEL_PATH = "/diyoData/experiments/knowledgedistill/experiments/only_teacher/2025-07-08_13-04-26/checkpoints/only_teacher.nemo"
 TEST_MANIFEST = "/diyoData/experiments/knowledgedistill/manifest/test-clean_manifest.json"
 TRANSCRIPTIONS_FILE = "transcriptions.jsonl"
 
@@ -25,7 +25,8 @@ if os.path.exists(TRANSCRIPTIONS_FILE):
             pred_texts.append(item["pred_text"])
 else:
     print("Transcribing audio files...")
-    # Load model
+    # Load model            self.teacher = EncDecRNNTBPEModel.restore_from(teacher_path, map_location='cpu')
+
     asr_model = nemo_asr.models.ASRModel.restore_from(restore_path=MODEL_PATH)
     # Transcribe
     pred_hyps = asr_model.transcribe(audio_files, batch_size=16)
