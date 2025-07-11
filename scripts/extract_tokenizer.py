@@ -6,11 +6,13 @@ import json
 from nemo.collections.asr.models import EncDecRNNTBPEModel
 
 nemo_path = "/diyoData/experiments/knowledgedistill/teacher/teacher_model.nemo"
-tokenizer_dir = "tokenizer"
+tokenizer_dir = "tokenizer2"
 os.makedirs(tokenizer_dir, exist_ok=True)
 
 print(f"Loading model from {nemo_path}...")
-model = EncDecRNNTBPEModel.restore_from(nemo_path)
+model = EncDecRNNTBPEModel.restore_from(nemo_path,map_location='cpu' )
+
+
 
 # Method 1: Extract everything from the .nemo archive
 print("\n=== Method 1: Extracting from .nemo archive ===")

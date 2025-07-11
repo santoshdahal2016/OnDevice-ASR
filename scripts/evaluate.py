@@ -2,7 +2,7 @@ import nemo.collections.asr as nemo_asr
 import json
 import os
 
-MODEL_PATH = "/diyoData/experiments/knowledgedistill/experiments/only_teacher/2025-07-08_13-04-26/checkpoints/only_teacher.nemo"
+MODEL_PATH = "/diyoData/experiments/knowledgedistill/experiments/only_teacher/2025-07-09_20-46-05/checkpoints/only_teacher.nemo"
 TEST_MANIFEST = "/diyoData/experiments/knowledgedistill/manifest/test-clean_manifest.json"
 TRANSCRIPTIONS_FILE = "transcriptions.jsonl"
 

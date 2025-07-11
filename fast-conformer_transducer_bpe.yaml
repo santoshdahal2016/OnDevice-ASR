@@ -52,7 +52,7 @@ model:
   enable_kd: true
   teacher_model_path: /diyoData/experiments/knowledgedistill/teacher/teacher_model.nemo
   kd_temperature: 30
-  kd_alpha: 0
+  kd_alpha: 0.4
   
 
 
@@ -288,5 +288,5 @@ exp_manager:
 
   create_wandb_logger: true
   wandb_logger_kwargs:
-    name: asr_distill_teacher_mean_loss
-    project: student_without_teacher
+    name: teacher_0.4
+    project: alpha_tunning
