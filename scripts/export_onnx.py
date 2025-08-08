@@ -1,24 +1,3 @@
-
-
-# from nemo.collections.asr.models import EncDecRNNTBPEModel
-
-
-# nemo_model_path = "/diyoData/experiments/knowledgedistill/experiments/only_teacher/2025-07-09_20-46-05/checkpoints/only_teacher.nemo"
-
-# model = EncDecRNNTBPEModel.restore_from(nemo_model_path)
-
-# # Export ONNX model
-# onnx_enc_model_fname = "onnx_export1" + "/" +  'encoder.onnx'
-# onnx_dec_model_fname = "onnx_export1" + "/" +  'decoder.onnx'
-# onnx_joint_model_fname = "onnx_export1" + "/" +  'joint.onnx'
-
-# model.encoder.export(onnx_enc_model_fname)
-# model.decoder.export(onnx_dec_model_fname)
-# model.joint.export(onnx_joint_model_fname)
-
-
-#!/usr/bin/env python3
-# Copyright      2024  Xiaomi Corp.        (authors: Fangjun Kuang)
 import argparse
 from typing import Dict
 
@@ -27,10 +6,7 @@ import onnx
 import torch
 from onnxruntime.quantization import QuantType, quantize_dynamic
 
-
-nemo_model_path = "/diyoData/experiments/knowledgedistill/experiments/only_teacher/2025-07-09_20-46-05/checkpoints/only_teacher.nemo"
-
-
+nemo_model_path = "/diyoData/experiments/knowledgedistill/experiments/medium/2025-07-12_16-15-05/checkpoints/medium.nemo"
 
 def add_meta_data(filename: str, meta_data: Dict[str, str]):
     """Add meta data to an ONNX model. It is changed in-place.
@@ -94,7 +70,6 @@ def main():
     cache_last_time_dim2 = asr_model.encoder.d_model
     cache_last_time_dim3 = asr_model.encoder.conv_context_size[0]
 
-
     asr_model.encoder.export("encoder.onnx")
     asr_model.decoder.export("decoder.onnx")
     asr_model.joint.export("joiner.onnx")
@@ -125,14 +100,12 @@ def main():
     }
     add_meta_data("encoder.onnx", meta_data)
 
-    for m in ["encoder", "decoder", "joiner"]:
-        quantize_dynamic(
-            model_input=f"{m}.onnx",
-            model_output=f"{m}.int16.onnx",
-            weight_type=QuantType.QUInt16,
-        )
-
-    print(meta_data)
+    # for m in ["encoder", "decoder", "joiner"]:
+    #     quantize_dynamic(
+    #         model_input=f"{m}.onnx",
+    #         model_output=f"{m}.int8.onnx",
+    #         weight_type=QuantType.QUInt8,
+    #     )
 
 
 if __name__ == "__main__":

@@ -7,3 +7,19 @@
 
 rnnt_joint_dump.pt
 /onnx_export
+
+*.onnx
+*.onnx.gz
+*.onnx.gz.part
+*.onnx.gz.part.1
+*.onnx.gz.part.2
+*.onnx.gz.part.3
+*.onnx.gz.part.4
+*.onnx.gz.part.5
+*.onnx.gz.part.6
+*.onnx.gz.part.7
+
+token.txt
+
+
+
