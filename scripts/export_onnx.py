@@ -6,7 +6,7 @@ import onnx
 import torch
 from onnxruntime.quantization import QuantType, quantize_dynamic
 
-nemo_model_path = "/diyoData/experiments/knowledgedistill/experiments/medium/2025-07-12_16-15-05/checkpoints/medium.nemo"
+nemo_model_path = "/diyoData/experiments/knowledgedistill/experiments/full_train/2025-08-08_15-33-14/checkpoints/full_train.nemo"
 
 def add_meta_data(filename: str, meta_data: Dict[str, str]):
     """Add meta data to an ONNX model. It is changed in-place.

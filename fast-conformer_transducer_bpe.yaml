@@ -62,7 +62,7 @@ model:
     joint_hidden: 640
 
   train_ds:
-    manifest_filepath: /diyoData/experiments/knowledgedistill/manifest/train_460_manifest.json
+    manifest_filepath: /diyoData/experiments/knowledgedistill/manifest/train_460-500_manifest.json
     sample_rate: ${model.sample_rate}
     batch_size: 8 # you may increase batch_size if your memory allows
     shuffle: true
@@ -79,7 +79,7 @@ model:
     bucketing_batch_size: null
 
   validation_ds:
-    manifest_filepath: /diyoData/experiments/knowledgedistill/manifest/val_460_manifest.json
+    manifest_filepath: /diyoData/experiments/knowledgedistill/manifest/val_460-500_manifest.json
     sample_rate: ${model.sample_rate}
     batch_size: 8
     shuffle: false
@@ -251,7 +251,7 @@ model:
 trainer:
   devices: -1 # number of GPUs, -1 would use all available GPUs
   num_nodes: 1
-  max_epochs: 500
+  max_epochs: 50
   max_steps: -1 # computed at runtime if not set
   val_check_interval: 1.0 # Set to 0.25 to check 4 times per epoch, or an int for number of iterations
   accelerator: auto
@@ -273,7 +273,7 @@ trainer:
 
 exp_manager:
   exp_dir: experiments
-  name: full_train
+  name: whole_train 
   create_tensorboard_logger: False
   create_checkpoint_callback: true
   checkpoint_callback_params:
@@ -282,11 +282,11 @@ exp_manager:
     mode: "min"
     save_top_k: 5
     always_save_nemo: True # saves the checkpoints as nemo files instead of PTL checkpoints
-  resume_from_checkpoint: /diyoData/experiments/knowledgedistill/experiments/full_train/2025-08-06_07-35-42/checkpoints/full_train--val_wer=0.0564-epoch=18.ckpt
+  resume_from_checkpoint: null
   resume_if_exists: false
   resume_ignore_no_checkpoint: false
 
   create_wandb_logger: true
   wandb_logger_kwargs:
-    name: full_train_460
-    project: full_train
+    name: 1000hours
+    project: whole_training

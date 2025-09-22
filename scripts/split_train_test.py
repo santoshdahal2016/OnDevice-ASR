@@ -1,9 +1,9 @@
 import os
 import random
 
-input_manifest = os.path.join(os.path.dirname(__file__), '../manifest/train-clean-100-360_manifest.json')
-train_manifest = os.path.join(os.path.dirname(__file__), '../manifest/train_460_manifest.json')
-val_manifest = os.path.join(os.path.dirname(__file__), '../manifest/val_460_manifest.json')
+input_manifest = os.path.join(os.path.dirname(__file__), '../manifest/train-clean-100-360-500_manifest.json')
+train_manifest = os.path.join(os.path.dirname(__file__), '../manifest/train_460-500_manifest.json')
+val_manifest = os.path.join(os.path.dirname(__file__), '../manifest/val_460-500_manifest.json')
 
 # Read all lines
 with open(input_manifest, 'r', encoding='utf-8') as f:

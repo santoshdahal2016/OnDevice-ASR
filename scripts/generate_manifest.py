@@ -4,9 +4,11 @@ import soundfile as sf
 
 LIBRI_DIRS = [
     "/diyoData/experiments/knowledgedistill/data/train-clean-100",
-    "/diyoData/experiments/knowledgedistill/data/LibriSpeech/train-clean-360"
+    "/diyoData/experiments/knowledgedistill/data/LibriSpeech/train-clean-360",
+    "/diyoData/experiments/knowledgedistill/data/LibriSpeech/train-other-500"
+
 ]
-MANIFEST_FILE = "manifest/train-clean-100-360_manifest.json"
+MANIFEST_FILE = "manifest/train-clean-100-360-500_manifest.json"
 
 os.makedirs(os.path.dirname(MANIFEST_FILE), exist_ok=True)
 
