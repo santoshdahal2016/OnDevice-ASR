@@ -4,7 +4,7 @@ import json
 import requests
 from tqdm import tqdm
 
-HF_TOKEN = os.getenv("HF_TOKEN")  # Make sure to export HF_TOKEN in your shell
+HF_TOKEN = os.getenv("HF_TOKEN")
 DATASET = "ai4bharat/IndicVoices"
 CONFIG = "nepali"
 SPLIT = "valid"
