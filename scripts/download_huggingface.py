@@ -5,6 +5,9 @@ import requests
 from tqdm import tqdm
 
 HF_TOKEN = os.getenv("HF_TOKEN")
+if not HF_TOKEN:
+    raise ValueError("HF_TOKEN environment variable is required. Please set it with your Hugging Face token.")
+
 DATASET = "ai4bharat/IndicVoices"
 CONFIG = "nepali"
 SPLIT = "valid"

@@ -21,5 +21,10 @@ rnnt_joint_dump.pt
 
 token.txt
 
+# Environment files
+.env
+.env.local
+.env.*.local
+
 
 
