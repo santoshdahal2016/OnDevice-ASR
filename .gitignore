@@ -26,5 +26,6 @@ token.txt
 .env.local
 .env.*.local
 
-
+/models/
+/Nemo-CM/
 

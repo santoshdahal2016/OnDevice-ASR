@@ -1,4 +1,5 @@
 import argparse
+import os
 from typing import Dict
 
 from nemo.collections.asr.models import EncDecRNNTBPEModel
@@ -31,14 +32,19 @@ def add_meta_data(filename: str, meta_data: Dict[str, str]):
 
 @torch.no_grad()
 def main():
+    # Create model directory if it doesn't exist
+    model_dir = "/diyoData/experiments/knowledgedistill/model"
+    os.makedirs(model_dir, exist_ok=True)
 
     asr_model = EncDecRNNTBPEModel.restore_from(nemo_model_path)
 
-    with open("./tokens.txt", "w", encoding="utf-8") as f:
+    # Save tokens.txt to model directory
+    tokens_path = os.path.join(model_dir, "tokens.txt")
+    with open(tokens_path, "w", encoding="utf-8") as f:
         for i, s in enumerate(asr_model.joint.vocabulary):
             f.write(f"{s} {i}\n")
         f.write(f"<blk> {i+1}\n")
-        print("Saved to tokens.txt")
+        print(f"Saved to {tokens_path}")
 
     asr_model.eval()
 
@@ -70,13 +76,33 @@ def main():
     cache_last_time_dim2 = asr_model.encoder.d_model
     cache_last_time_dim3 = asr_model.encoder.conv_context_size[0]
 
-    asr_model.encoder.export("encoder.onnx")
-    asr_model.decoder.export("decoder.onnx")
-    asr_model.joint.export("joiner.onnx")
+    # Export encoder, decoder, joiner to ONNX and preprocessor to TorchScript in model directory
+    encoder_path = os.path.join(model_dir, "encoder.onnx")
+    decoder_path = os.path.join(model_dir, "decoder.onnx")
+    joiner_path = os.path.join(model_dir, "joiner.onnx")
+    preprocessor_path = os.path.join(model_dir, "preprocessor.ts")
+    
+    asr_model.encoder.export(encoder_path)
+    asr_model.decoder.export(decoder_path)
+    asr_model.joint.export(joiner_path)
+    # Export preprocessor to TorchScript since ONNX doesn't support STFT
+    asr_model.preprocessor.export(preprocessor_path)
+    print(f"Exported models to {model_dir}:")
+    print(f"  - encoder.onnx")
+    print(f"  - decoder.onnx") 
+    print(f"  - joiner.onnx")
+    print(f"  - preprocessor.ts")
 
     normalize_type = asr_model.cfg.preprocessor.normalize
     if normalize_type == "NA":
         normalize_type = ""
+
+    # Get preprocessor configuration
+    sample_rate = asr_model.cfg.preprocessor.sample_rate
+    n_fft = asr_model.cfg.preprocessor.n_fft if hasattr(asr_model.cfg.preprocessor, 'n_fft') else None
+    window_size = asr_model.cfg.preprocessor.window_size if hasattr(asr_model.cfg.preprocessor, 'window_size') else 0.02
+    window_stride = asr_model.cfg.preprocessor.window_stride if hasattr(asr_model.cfg.preprocessor, 'window_stride') else 0.01
+    n_mels = asr_model.cfg.preprocessor.features
 
     meta_data = {
         "vocab_size": asr_model.decoder.vocab_size,
@@ -96,16 +122,20 @@ def main():
         "version": "1",
         "model_author": "NeMo",
         "url": f" ",
-        "comment": "Only the transducer branch is exported",
+        "comment": "Encoder/decoder/joiner in ONNX format, preprocessor in TorchScript format",
+        "sample_rate": sample_rate,
+        "n_fft": n_fft,
+        "window_size": window_size,
+        "window_stride": window_stride,
+        "n_mels": n_mels,
     }
-    add_meta_data("encoder.onnx", meta_data)
+    
+    # Add metadata to all exported models
+    add_meta_data(encoder_path, meta_data)
+    add_meta_data(decoder_path, meta_data)
+    add_meta_data(joiner_path, meta_data)
+    print("Added metadata to all ONNX models")
 
-    # for m in ["encoder", "decoder", "joiner"]:
-    #     quantize_dynamic(
-    #         model_input=f"{m}.onnx",
-    #         model_output=f"{m}.int8.onnx",
-    #         weight_type=QuantType.QUInt8,
-    #     )
 
 
 if __name__ == "__main__":

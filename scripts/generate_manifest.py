@@ -104,11 +104,11 @@ def save_manifest(manifest, manifest_file):
     print(f"Manifest saved to: {manifest_file}")
 
 # Define directories for each dataset
-# train_dirs = [
-#     "/mnt/diyo_data/datasets/librispeechData/LibriSpeech/train-other-500",
-#     "/mnt/diyo_data/datasets/librispeechData/LibriSpeech/train-clean-100",
-#     "/mnt/diyo_data/datasets/librispeechData/LibriSpeech/train-clean-360"
-# ]
+train_dirs = [
+    "/mnt/diyo_data/datasets/librispeechData/LibriSpeech/train-other-500",
+    "/mnt/diyo_data/datasets/librispeechData/LibriSpeech/train-clean-100",
+    "/mnt/diyo_data/datasets/librispeechData/LibriSpeech/train-clean-360"
+]
 
 test_clean_dirs = [
     "/mnt/diyo_data/datasets/librispeechData/LibriSpeech/test-clean"
@@ -134,15 +134,15 @@ print("LIBRISPEECH MANIFEST GENERATION")
 print("=" * 60)
 
 # Process train dataset 
-# print("\n" + "=" * 20 + " TRAIN DATASET " + "=" * 20)
-# train_manifest, train_stats = process_directories(train_dirs, "train")
-# save_manifest(train_manifest, train_manifest_file)
+print("\n" + "=" * 20 + " TRAIN DATASET " + "=" * 20)
+train_manifest, train_stats = process_directories(train_dirs, "train")
+save_manifest(train_manifest, train_manifest_file)
 
-# print("\n=== TRAIN SUMMARY ===")
-# print(f"Audio files inspected : {train_stats['n_audio']}")
-# print(f"Missing transcripts   : {train_stats['n_missing_trans']}")
-# print(f"Missing utt in trans  : {train_stats['n_missing_utt']}")
-# print(f"Added to manifest     : {train_stats['n_manifest_entries']}")
+print("\n=== TRAIN SUMMARY ===")
+print(f"Audio files inspected : {train_stats['n_audio']}")
+print(f"Missing transcripts   : {train_stats['n_missing_trans']}")
+print(f"Missing utt in trans  : {train_stats['n_missing_utt']}")
+print(f"Added to manifest     : {train_stats['n_manifest_entries']}")
 
 # Process test-clean dataset
 print("\n" + "=" * 18 + " TEST-CLEAN DATASET " + "=" * 18)
