@@ -1,0 +1,30 @@
+{
+    "name": "onnx-rnnt-inference",
+    "version": "1.0.0",
+    "description": "Node.js ONNX RNNT inference for speech recognition",
+    "main": "main.js",
+    "scripts": {
+      "start": "node main.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "onnxruntime-node": "^1.16.3",
+      "wav-file-info": "^0.0.8",
+      "node-wav": "^0.0.2",
+      "yargs": "^17.7.2",
+      "fs-extra": "^11.1.1",
+      "fft-js": "^0.0.12"
+    },
+    "keywords": [
+      "onnx",
+      "speech-recognition",
+      "rnnt",
+      "asr"
+    ],
+    "author": "",
+    "license": "MIT",
+    "engines": {
+      "node": ">=14.0.0"
+    }
+  }
+  
